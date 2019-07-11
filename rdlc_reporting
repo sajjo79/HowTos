@@ -1,0 +1,20 @@
+private void btnShowReport_Click(object sender, EventArgs e)
+        {
+            SqlConnection sqlConn = new SqlConnection("Data Source=desktop-sqq1kfn\\sqlexpress;Initial Catalog=employee;Integrated Security=True");
+            String SQL = "select * from emp";
+            SqlDataAdapter da = new SqlDataAdapter(SQL, sqlConn);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            DataTable dt = ds.Tables[0];
+
+            this.reportViewer1.RefreshReport();
+            reportViewer1.Visible = true;
+            reportViewer1.Reset();
+            reportViewer1.ProcessingMode = ProcessingMode.Local;
+            reportViewer1.LocalReport.ReportPath = @"d:\users\sajid\documents\visual studio 2015\Projects\ReportingApp\ReportingApp\rptOnButtonClick.rdlc";
+            ReportDataSource rds = new ReportDataSource();
+            rds.Name = "dataset_report2";
+            rds.Value = ds.Tables[0];
+            reportViewer1.LocalReport.DataSources.Add(rds);
+            reportViewer1.RefreshReport();
+        }
